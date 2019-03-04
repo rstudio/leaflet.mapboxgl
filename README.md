@@ -29,6 +29,8 @@ leaflet(quakes) %>%
   addCircleMarkers(weight = 1, fillOpacity = 0, radius = 3)
 ```
 
+![Screenshot of map](sshot.png)
+
 ## License
 
 MIT
