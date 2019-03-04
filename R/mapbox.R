@@ -35,18 +35,14 @@ htmldeps <- function() {
 #'   token](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/#creating-and-managing-access-tokens),
 #'   or `NA` to explicitly pass no token. You can also set a token globally by
 #'   calling `options(mapbox.accessToken = "...")`.
-#' @param style Tile vector URL; can begin with `http://`, `https://`, or
-#'   `mapbox://`.
 #' @param ... Other options to pass to Mapbox GL JS.
 #'
-#' @rdname addMapboxGLRaw
+#' @rdname addMapboxGL
 #' @export
-mapboxOptions <- function(accessToken = NULL,
-  style = NULL, ...) {
+mapboxOptions <- function(accessToken = NULL, ...) {
 
   opts <- list(
     accessToken = accessToken,
-    style = style,
     ...
   )
 
@@ -60,6 +56,8 @@ mapboxOptions <- function(accessToken = NULL,
 #' to add a Mapbox GL layer to a Leaflet map.
 #'
 #' @param map The Leaflet R object (see [leaflet::leaflet()]).
+#' @param style Tile vector URL; can begin with `http://`, `https://`, or
+#'   `mapbox://`.
 #' @param layerId A layer ID; see
 #'   [docs](https://rstudio.github.io/leaflet/showhide.html).
 #' @param group The name of the group the newly created layer should belong to
@@ -77,28 +75,28 @@ mapboxOptions <- function(accessToken = NULL,
 #' library(leaflet)
 #' \donttest{
 #' leaflet(quakes) %>%
-#'   addMapboxGLRaw(options = mapboxOptions(
-#'     style = "mapbox://styles/mapbox/streets-v9"
-#'   )) %>%
+#'   addMapboxGL(style = "mapbox://styles/mapbox/streets-v9") %>%
 #'   addCircleMarkers(weight = 1, fillOpacity = 0, radius = 3)
 #' }
 #' @export
 #' @import leaflet
-addMapboxGLRaw <- function(map, layerId = NULL, group = NULL, options = mapboxOptions()) {
+addMapboxGL <- function(map, style = "mapbox://styles/mapbox/streets-v9",
+  accessToken = getOption("mapbox.accessToken"),
+  layerId = NULL, group = NULL, options = mapboxOptions()) {
+
   map$dependencies <- c(
     map$dependencies,
     htmldeps()
   )
 
+  options$style <- style
+  options$accessToken <- accessToken
+
   if (is.null(options[["accessToken"]])) {
-    accessToken <- getOption("mapbox.accessToken")
-    if (is.null(accessToken)) {
-      stop("Please supply addMapboxGL() with a Mapbox access token, ",
-        "either via `options(mapbox.accessToken = \"...\")` or as an ",
-        "argument to `mapboxOptions()`. (If you're not using Mapbox ",
-        "URLs, you can set the access token to `NA`.)")
-    }
-    options$accessToken <- accessToken
+    stop("Please supply addMapboxGL() with a Mapbox access token, ",
+      "either via `options(mapbox.accessToken = \"...\")` or as an ",
+      "argument to `addMapboxGL()`. (If you're not using Mapbox ",
+      "URLs, you can set the access token to `NA`.)")
   }
 
   invokeMethod(map, getMapData(map), "addMapboxGL", layerId, group, options)
