@@ -1,0 +1,15 @@
+{
+  "name": "leaflet-mapbox-gl-binding",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "mapbox-gl": "^0.53.1",
+    "mapbox-gl-leaflet": "0.0.4"
+  }
+}

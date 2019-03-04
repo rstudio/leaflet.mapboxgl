@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebGL</title>
+    <meta charset="utf-8">
+    <style>#map { width: 800px; height: 600px; }</style>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+
+    <!-- Mapbox GL -->
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.css" rel='stylesheet' />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.js"></script>
+
+    <!-- Leaflet.MarkerCluster -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.4/leaflet.markercluster.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.4/MarkerCluster.css' rel='stylesheet' />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.4/MarkerCluster.Default.css' rel='stylesheet' />
+
+    <!-- test data -->
+    <script src="https://www.mapbox.com/mapbox.js/assets/data/realworld.388.js"></script>
+</head>
+
+<body>
+<div id="map"></div>
+
+<script src="../leaflet-mapbox-gl.js"></script>
+<script>
+
+var map = L.map('map', {maxZoom: 17}).setView([-37.821, 175.219], 16);
+
+var gl = L.mapboxGL({
+    accessToken: 'no-token',
+    style: 'https://raw.githubusercontent.com/osm2vectortiles/mapbox-gl-styles/master/styles/bright-v9-cdn.json'
+}).addTo(map);
+
+var markers = L.markerClusterGroup();
+
+for (var i = 0; i < addressPoints.length; i++) {
+    var a = addressPoints[i];
+    var title = a[2];
+    var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
+    marker.bindPopup(title);
+    markers.addLayer(marker);
+}
+
+map.addLayer(markers);
+
+</script>
+</body>
+</html>
