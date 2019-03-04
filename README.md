@@ -29,7 +29,7 @@ leaflet(quakes) %>%
   addCircleMarkers(weight = 1, fillOpacity = 0, radius = 3)
 ```
 
-![Screenshot of map](sshot.png)
+<img src="https://raw.githubusercontent.com/rstudio/leaflet.mapboxgl/master/sshot.png" alt="Screenshot of map" width="615" height="421"/>
 
 ## License
 
