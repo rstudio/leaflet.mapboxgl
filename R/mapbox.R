@@ -1,4 +1,5 @@
 #' @importFrom htmltools htmlDependency
+#' @importFrom utils packageVersion
 htmldeps <- function() {
   list(
     htmlDependency(
@@ -36,6 +37,8 @@ htmldeps <- function() {
 #'   calling `options(mapbox.accessToken = "...")`.
 #' @param style Tile vector URL; can begin with `http://`, `https://`, or
 #'   `mapbox://`.
+#' @param ... Other options to pass to Mapbox GL JS.
+#'
 #' @rdname addMapboxGLRaw
 #' @export
 mapboxOptions <- function(accessToken = NULL,
@@ -68,15 +71,19 @@ mapboxOptions <- function(accessToken = NULL,
 #'   for more details. Not all options may work in the context of Leaflet.
 #'
 #' @examples
-#' # Before using, set your Mapbox access token using:
+#' # Before running, set your Mapbox access token using:
 #' # `options(mapbox.accessToken = "...")`
 #'
+#' library(leaflet)
+#' \donttest{
 #' leaflet(quakes) %>%
 #'   addMapboxGLRaw(options = mapboxOptions(
 #'     style = "mapbox://styles/mapbox/streets-v9"
 #'   )) %>%
 #'   addCircleMarkers(weight = 1, fillOpacity = 0, radius = 3)
+#' }
 #' @export
+#' @import leaflet
 addMapboxGLRaw <- function(map, layerId = NULL, group = NULL, options = mapboxOptions()) {
   map$dependencies <- c(
     map$dependencies,

@@ -15,7 +15,10 @@ addMapboxGLRaw(map, layerId = NULL, group = NULL,
 or \code{NA} to explicitly pass no token. You can also set a token globally by
 calling \code{options(mapbox.accessToken = "...")}.}
 
-\item{style}{Tile vector URL; can begin with \code{http://}, \code{https://}, or \code{mapbox://}.}
+\item{style}{Tile vector URL; can begin with \code{http://}, \code{https://}, or
+\code{mapbox://}.}
+
+\item{...}{Other options to pass to Mapbox GL JS.}
 
 \item{map}{The Leaflet R object (see \code{\link[leaflet:leaflet]{leaflet::leaflet()}}).}
 
@@ -36,12 +39,15 @@ Uses the \href{https://github.com/mapbox/mapbox-gl-leaflet}{Mapbox GL Leaflet pl
 to add a Mapbox GL layer to a Leaflet map.
 }
 \examples{
-# Before using, set your Mapbox access token using:
+# Before running, set your Mapbox access token using:
 # `options(mapbox.accessToken = "...")`
 
+library(leaflet)
+\donttest{
 leaflet(quakes) \%>\%
   addMapboxGLRaw(options = mapboxOptions(
     style = "mapbox://styles/mapbox/streets-v9"
   )) \%>\%
   addCircleMarkers(weight = 1, fillOpacity = 0, radius = 3)
+}
 }

@@ -1,2 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+inst/node_modules/mapbox-gl/src
+inst/node_modules/mapbox-gl-leaflet/.travis.yml
+inst/node_modules/mapbox-gl/.flowconfig
+inst/node_modules/mapbox-gl/dist/mapbox-gl-dev.*
+inst/node_modules/mapbox-gl/dist/mapbox-gl-unminified.*

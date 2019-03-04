@@ -2,4 +2,6 @@
 
 export(addMapboxGLRaw)
 export(mapboxOptions)
+import(leaflet)
 importFrom(htmltools,htmlDependency)
+importFrom(utils,packageVersion)

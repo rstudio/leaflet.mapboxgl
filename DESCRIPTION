@@ -2,7 +2,7 @@ Package: leaflet.mapboxgl
 Type: Package
 Title: Mapbox GL JS plugin for Leaflet to support vector tiles
 Version: 0.1.0
-Imports: leaflet, htmltools
+Imports: leaflet, htmltools, utils
 Authors@R: c(
     person("Joe", "Cheng", role = c("aut", "cre"), email = "joe@rstudio.com"),
     person(family = "RStudio", role = "cph"),
