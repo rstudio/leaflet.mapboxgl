@@ -9,7 +9,7 @@ mapboxOptions(accessToken = NULL, ...)
 
 addMapboxGL(map, style = "mapbox://styles/mapbox/streets-v9",
   accessToken = getOption("mapbox.accessToken"), layerId = NULL,
-  group = NULL, options = mapboxOptions())
+  group = NULL, setView = TRUE, options = mapboxOptions())
 }
 \arguments{
 \item{accessToken}{A \href{https://docs.mapbox.com/help/how-mapbox-works/access-tokens/#creating-and-managing-access-tokens}{Mapbox access token},
@@ -30,6 +30,12 @@ calling \code{options(mapbox.accessToken = "...")}.}
 (for \code{\link[leaflet:clearGroup]{leaflet::clearGroup()}} and \code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}} purposes).
 (Warning: Due to the way Leaflet and Mapbox GL JS integrate, showing/hiding
 a GL layer may give unexpected results.)}
+
+\item{setView}{If \code{TRUE} (the default), drive the map to the center/zoom
+specified in the style (if any). Note that this will override any
+\code{\link[leaflet:setView]{leaflet::setView()}} or \code{\link[leaflet:fitBounds]{leaflet::fitBounds()}} calls that occur between
+the \code{addMapboxGL} call and when the style finishes loading; use
+\code{setView=FALSE} in those cases.}
 
 \item{options}{A list of Map options. See the
 \href{https://docs.mapbox.com/mapbox-gl-js/api/#map}{Mapbox GL JS documentation}

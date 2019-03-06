@@ -31,6 +31,26 @@ htmldeps <- function() {
   )
 }
 
+# # Download the style layer (including mapbox URLs) and json-decode
+# getStyleLayer <- function(url, accessToken) {
+#   match <- regexec("^mapbox://styles/([^/]+)/([^/?]+)$", url)
+#   match <- regmatches(url, match)[[1]]
+#   if (length(match) > 0) {
+#     username <- match[[2]]
+#     style_id <- match[[3]]
+#     url <- paste0(
+#       "https://api.mapbox.com/styles/v1/",
+#       username,
+#       "/",
+#       style_id,
+#       "?access_token=",
+#       utils::URLencode(accessToken, reserved = TRUE, repeated = TRUE)
+#     )
+#   }
+#
+#   jsonlite::fromJSON(url)
+# }
+
 #' @param accessToken A [Mapbox access
 #'   token](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/#creating-and-managing-access-tokens),
 #'   or `NA` to explicitly pass no token. You can also set a token globally by
@@ -64,6 +84,11 @@ mapboxOptions <- function(accessToken = NULL, ...) {
 #'   (for [leaflet::clearGroup()] and [leaflet::addLayersControl()] purposes).
 #'   (Warning: Due to the way Leaflet and Mapbox GL JS integrate, showing/hiding
 #'   a GL layer may give unexpected results.)
+#' @param setView If `TRUE` (the default), drive the map to the center/zoom
+#'   specified in the style (if any). Note that this will override any
+#'   [leaflet::setView()] or [leaflet::fitBounds()] calls that occur between
+#'   the `addMapboxGL` call and when the style finishes loading; use
+#'   `setView=FALSE` in those cases.
 #' @param options A list of Map options. See the
 #'   [Mapbox GL JS documentation](https://docs.mapbox.com/mapbox-gl-js/api/#map)
 #'   for more details. Not all options may work in the context of Leaflet.
@@ -82,7 +107,8 @@ mapboxOptions <- function(accessToken = NULL, ...) {
 #' @import leaflet
 addMapboxGL <- function(map, style = "mapbox://styles/mapbox/streets-v9",
   accessToken = getOption("mapbox.accessToken"),
-  layerId = NULL, group = NULL, options = mapboxOptions()) {
+  layerId = NULL, group = NULL, setView = TRUE,
+  options = mapboxOptions()) {
 
   map$dependencies <- c(
     map$dependencies,
@@ -99,5 +125,5 @@ addMapboxGL <- function(map, style = "mapbox://styles/mapbox/streets-v9",
       "URLs, you can set the access token to `NA`.)")
   }
 
-  invokeMethod(map, getMapData(map), "addMapboxGL", layerId, group, options)
+  invokeMethod(map, getMapData(map), "addMapboxGL", setView, layerId, group, options)
 }
